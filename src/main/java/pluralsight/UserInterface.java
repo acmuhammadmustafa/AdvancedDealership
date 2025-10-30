@@ -160,6 +160,7 @@ public class UserInterface {
     }
 
     public void processAddVehicleRequest() {
+        // UPDATE SO THAT IF an integer is inputted into a getString, it tells you to put in a STRING.
         int getVin = ConsoleHelper.promptForInt("Enter vehicle's VIN");
         int getYear = ConsoleHelper.promptForInt("Enter vehicle's year");
         String getMake = ConsoleHelper.promptForString("Enter vehicle's make");
