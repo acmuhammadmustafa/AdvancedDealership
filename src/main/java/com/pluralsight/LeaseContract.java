@@ -1,4 +1,4 @@
-package pluralsight;
+package com.pluralsight;
 
 public class LeaseContract extends Contract{
 
@@ -14,6 +14,7 @@ public class LeaseContract extends Contract{
 
     @Override
     public double getMonthlyPay() {
+        //Calculations.getLoanPayment()
         return 0;
     }
 

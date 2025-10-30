@@ -1,4 +1,4 @@
-package pluralsight;
+package com.pluralsight;
 
 import java.io.*;
 public class DealershipFileManager {

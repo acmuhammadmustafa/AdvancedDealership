@@ -1,4 +1,4 @@
-package pluralsight;
+package com.pluralsight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +113,7 @@ public class Dealership {
     public void removeVehicle(Vehicle v) {
         this.inventory.remove(v);
     }
+
 
 // ----------------------------------------------------------------
     @Override

@@ -1,4 +1,4 @@
-package pluralsight;
+package com.pluralsight;
 
 import java.util.List;
 
@@ -40,6 +40,8 @@ public class UserInterface {
                  \
                 9) Remove a Vehicle
                  \
+                10) Sell a Vehicle
+                \
                 99) Exit\s
                  \
                 ==========================
@@ -95,6 +97,10 @@ public class UserInterface {
                     System.out.println("\n======================\n");
                     break;
 
+                case 10:
+                    processSellAVehicle();
+                    System.out.println("\n======================\n");
+                    break;
                 case 99:
                     return;
 
@@ -103,6 +109,46 @@ public class UserInterface {
                     System.out.println("======================\n");
             }
         } while (true);
+    }
+
+    private void processSellAVehicle() {
+        // Show all vehicles so user can see VINs
+        System.out.println("Current inventory:");
+        displayVehicles(dealership.getAllVehicles());
+
+        // Prompt for VIN
+        int vinToSell = ConsoleHelper.promptForInt("Enter the VIN of the vehicle to sell");
+
+        // Try to find the vehicle
+        Vehicle vehicleToSell = null;
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (vehicle.getVin() == vinToSell) {
+                vehicleToSell = vehicle;
+                break;
+            }
+        }
+
+        String contractDate = "2025-10-30";
+        String customerName = "Matt C";
+        String customerEmail = "matt@rcc.team";
+        boolean isFinanced = true;
+
+        SalesContract contract = new SalesContract(contractDate, customerName, customerEmail, vehicleToSell, isFinanced);
+
+        ContractFileManager.saveContract(contract);
+        dealership.removeVehicle(vehicleToSell);
+        //contract.getMonthlyPay();
+//        // Remove if found
+//        if (vehicleToSell != null) {
+//            dealership.sellVehicle(vehicleToSell);
+//            System.out.println("Vehicle removed successfully!");
+//
+//            // Save the updated dealership
+//            DealershipFileManager fm = new DealershipFileManager();
+//            fm.saveDealership(dealership);
+//        } else {
+//            System.out.println("Vehicle with VIN " + vinToSell + " not found.");
+//        }
     }
 
     private void init() {
