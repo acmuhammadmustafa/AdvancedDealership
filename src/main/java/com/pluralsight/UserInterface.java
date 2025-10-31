@@ -43,6 +43,8 @@ public class UserInterface {
                  \
                 10) Sell a Vehicle
                 \
+                11) Lease a Vehicle
+                \
                 99) Exit\s
                  \
                 ==========================
@@ -105,6 +107,8 @@ public class UserInterface {
 
                 case 11:
                     processLeaseAVehicle();
+                    System.out.println("\n======================\n");
+                    break;
 
                 case 99:
                     return;
@@ -116,73 +120,7 @@ public class UserInterface {
         } while (true);
     }
 
-    private void processLeaseAVehicle() {
-        // Show all vehicles so user can see VINs
-        System.out.println("Current inventory:");
-        displayVehicles(dealership.getAllVehicles());
 
-        // Prompt for VIN
-        int vinToSell = ConsoleHelper.promptForInt("Enter the VIN of the vehicle to sell");
-
-        // Try to find the vehicle
-        Vehicle vehicleToSell = null;
-        for (Vehicle vehicle : dealership.getAllVehicles()) {
-            if (vehicle.getVin() == vinToSell) {
-                vehicleToSell = vehicle;
-                break;
-            }
-        }
-
-        String contractDate = "2025-10-30";
-        String customerName = ConsoleHelper.promptForString("Enter customer's name");
-        String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
-        boolean isFinanced = true;
-
-        LeaseContract leaseContract = new LeaseContract(contractDate, customerName, customerEmail, vehicleToSell);
-//        ContractFileManager.saveContract(contract);
-
-        dealership.removeVehicle(vehicleToSell); // Edit this (?)
-    }
-
-    private void processSellAVehicle() {
-        // Show all vehicles so user can see VINs
-        System.out.println("Current inventory:");
-        displayVehicles(dealership.getAllVehicles());
-
-        // Prompt for VIN
-        int vinToSell = ConsoleHelper.promptForInt("Enter the VIN of the vehicle to sell");
-
-        // Try to find the vehicle
-        Vehicle vehicleToSell = null;
-        for (Vehicle vehicle : dealership.getAllVehicles()) {
-            if (vehicle.getVin() == vinToSell) {
-                vehicleToSell = vehicle;
-                break;
-            }
-        }
-
-        String contractDate = "2025-10-30";
-        String customerName = ConsoleHelper.promptForString("Enter customer's name");
-        String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
-        boolean isFinanced = true;
-
-        SalesContract salesContract = new SalesContract(contractDate, customerName, customerEmail, vehicleToSell, isFinanced);
-//        ContractFileManager.saveContract(contract);
-
-        dealership.removeVehicle(vehicleToSell);
-        //contract.getMonthlyPay();
-//        // Remove if found
-//        if (vehicleToSell != null) {
-//            dealership.sellVehicle(vehicleToSell);
-//            System.out.println("Vehicle removed successfully!");
-//
-//            // Save the updated dealership
-//            DealershipFileManager fm = new DealershipFileManager();
-//            fm.saveDealership(dealership);
-//        } else {
-//            System.out.println("Vehicle with VIN " + vinToSell + " not found.");
-//        }
-    }
 
     private void init() {
         DealershipFileManager dealershipFileManager = new DealershipFileManager();
@@ -286,6 +224,79 @@ public class UserInterface {
         } else {
             System.out.println("Vehicle with VIN " + vinToRemove + " not found.");
         }
+    }
+
+    private void processLeaseAVehicle() {
+        // Show all vehicles so user can see VINs
+        System.out.println("Current inventory:");
+        displayVehicles(dealership.getAllVehicles());
+
+        // Prompt for VIN
+        int vinToSell = ConsoleHelper.promptForInt("Enter the VIN of the vehicle to sell");
+
+        // Try to find the vehicle
+        Vehicle vehicleToSell = null;
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (vehicle.getVin() == vinToSell) {
+                vehicleToSell = vehicle;
+                break;
+            }
+        }
+
+        String contractDate = ConsoleHelper.promptForString("Enter the date");
+        String customerName = ConsoleHelper.promptForString("Enter customer's name");
+        String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
+        String financeOption = ConsoleHelper.promptForString("Would you like to finance your vehicle? (Y/N)");
+
+        boolean financeOutput = financeOption.equalsIgnoreCase("Y") ? true : false;
+
+
+        LeaseContract leaseContract = new LeaseContract(contractDate, customerName, customerEmail, vehicleToSell);
+        ContractDataManager cm = new ContractDataManager();
+        cm.saveContract(leaseContract);
+
+        dealership.removeVehicle(vehicleToSell); // Edit this (?)
+    }
+
+    private void processSellAVehicle() {
+        // Show all vehicles so user can see VINs
+        System.out.println("Current inventory:");
+        displayVehicles(dealership.getAllVehicles());
+
+        // Prompt for VIN
+        int vinToSell = ConsoleHelper.promptForInt("Enter the VIN of the vehicle to sell");
+
+        // Try to find the vehicle
+        Vehicle vehicleToSell = null;
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (vehicle.getVin() == vinToSell) {
+                vehicleToSell = vehicle;
+                break;
+            }
+        }
+
+        String contractDate = ConsoleHelper.promptForString("Enter the date");
+        String customerName = ConsoleHelper.promptForString("Enter customer's name");
+        String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
+        boolean isFinanced = true;
+
+        SalesContract salesContract = new SalesContract(contractDate, customerName, customerEmail, vehicleToSell, isFinanced);
+        ContractDataManager cm = new ContractDataManager();
+        cm.saveContract(salesContract);
+
+        dealership.removeVehicle(vehicleToSell);
+        //contract.getMonthlyPay();
+//        // Remove if found
+//        if (vehicleToSell != null) {
+//            dealership.sellVehicle(vehicleToSell);
+//            System.out.println("Vehicle removed successfully!");
+//
+//            // Save the updated dealership
+//            DealershipFileManager fm = new DealershipFileManager();
+//            fm.saveDealership(dealership);
+//        } else {
+//            System.out.println("Vehicle with VIN " + vinToSell + " not found.");
+//        }
     }
 
     private void displayVehicles(List<Vehicle> vehicles) {
