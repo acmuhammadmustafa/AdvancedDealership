@@ -68,11 +68,8 @@ public class SalesContract extends Contract {
             // Under $10,000 = 5.25% for 24 months
             double interestRate = 0.0525;
             int months = 24;
-            double monthlyRate = interestRate / 12;
 
-            double monthlyPayment = 0;
-
-            return monthlyPayment;
+            return Calculations.getLoanPayment(totalPrice,months,interestRate);
         }
     }
 

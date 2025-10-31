@@ -11,15 +11,40 @@ public class LeaseContract extends Contract{
         this.leaseFee = leaseFee;
     }
 
+    public double getEndValue() {
+        return endValue;
+    }
+
+    public void setEndValue(double endValue) {
+        this.endValue = endValue;
+    }
+
+    public double getLeaseFee() {
+        return leaseFee;
+    }
+
+    public void setLeaseFee(double leaseFee) {
+        this.leaseFee = leaseFee;
+    }
 
     @Override
     public double getMonthlyPay() {
-        //Calculations.getLoanPayment()
-        return 0;
+        double vehiclePrice = getVehicleSold().getPrice();
+
+        double interestRate = 0.04;
+        int months = 36;
+
+
+        return Calculations.getLoanPayment(vehiclePrice,months,interestRate);
     }
 
     @Override
     public double getTotalPrice() {
-        return 0;
+        double vehiclePrice = getVehicleSold().getPrice();
+        endValue = vehiclePrice/2;
+        leaseFee = vehiclePrice * .07;
+
+
+        return vehiclePrice * endValue * leaseFee;
     }
 }

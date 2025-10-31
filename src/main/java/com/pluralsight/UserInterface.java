@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.rmi.dgc.Lease;
 import java.util.List;
 
 public class UserInterface {
@@ -101,6 +102,10 @@ public class UserInterface {
                     processSellAVehicle();
                     System.out.println("\n======================\n");
                     break;
+
+                case 11:
+                    processLeaseAVehicle();
+
                 case 99:
                     return;
 
@@ -109,6 +114,34 @@ public class UserInterface {
                     System.out.println("======================\n");
             }
         } while (true);
+    }
+
+    private void processLeaseAVehicle() {
+        // Show all vehicles so user can see VINs
+        System.out.println("Current inventory:");
+        displayVehicles(dealership.getAllVehicles());
+
+        // Prompt for VIN
+        int vinToSell = ConsoleHelper.promptForInt("Enter the VIN of the vehicle to sell");
+
+        // Try to find the vehicle
+        Vehicle vehicleToSell = null;
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (vehicle.getVin() == vinToSell) {
+                vehicleToSell = vehicle;
+                break;
+            }
+        }
+
+        String contractDate = "2025-10-30";
+        String customerName = ConsoleHelper.promptForString("Enter customer's name");
+        String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
+        boolean isFinanced = true;
+
+        LeaseContract leaseContract = new LeaseContract(contractDate, customerName, customerEmail, vehicleToSell);
+//        ContractFileManager.saveContract(contract);
+
+        dealership.removeVehicle(vehicleToSell); // Edit this (?)
     }
 
     private void processSellAVehicle() {
@@ -129,13 +162,13 @@ public class UserInterface {
         }
 
         String contractDate = "2025-10-30";
-        String customerName = "Matt C";
-        String customerEmail = "matt@rcc.team";
+        String customerName = ConsoleHelper.promptForString("Enter customer's name");
+        String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
         boolean isFinanced = true;
 
-        SalesContract contract = new SalesContract(contractDate, customerName, customerEmail, vehicleToSell, isFinanced);
+        SalesContract salesContract = new SalesContract(contractDate, customerName, customerEmail, vehicleToSell, isFinanced);
+//        ContractFileManager.saveContract(contract);
 
-        ContractFileManager.saveContract(contract);
         dealership.removeVehicle(vehicleToSell);
         //contract.getMonthlyPay();
 //        // Remove if found
