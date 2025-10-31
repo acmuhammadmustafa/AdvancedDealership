@@ -5,16 +5,15 @@ import java.rmi.dgc.Lease;
 
 public class ContractDataManager {
     public void saveContract(Contract contract) {
+        try {
+            FileWriter fw = new FileWriter("contracts.csv", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+        if (contract instanceof SalesContract sale) {
 
-        if (contract instanceof SalesContract) {
-            try {
                 //Create a FileWriter and BufferedWriter:
-                FileWriter fw = new FileWriter("contracts.csv", true);
-                BufferedWriter bw = new BufferedWriter(fw);
 
-                SalesContract sale = (SalesContract) contract;
 
-                String saleData = "Sale" + "|" +
+            String saleData = "Sale" + "|" +
                         sale.getDate() + "|" +
                         sale.getCustomerName() + "|" +
                         sale.getEmail() + "|" +
@@ -37,23 +36,14 @@ public class ContractDataManager {
 
                 bw.write(saleData);
                 bw.newLine();
-
-                bw.close();
                 System.out.println("Sale Contract saved successfully!");
 
-            } catch (IOException e) {
-                System.out.println("Something went wrong..");
             }
-        }
 
-        if (contract instanceof LeaseContract) {
-            try {
-                //Create a FileWriter and BufferedWriter:
-                FileWriter fw = new FileWriter("contracts.csv", true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                LeaseContract lease = (LeaseContract) contract;
 
-                String leaseData = "Lease" + "|" +
+        if (contract instanceof LeaseContract lease) {
+
+            String leaseData = "Lease" + "|" +
                         lease.getDate() + "|" +
                         lease.getCustomerName() + "|" +
                         lease.getEmail() + "|" +
@@ -74,12 +64,12 @@ public class ContractDataManager {
                 bw.write(leaseData);
                 bw.newLine();
 
-                bw.close();
                 System.out.println("Lease Contract saved successfully!");
 
-            } catch (IOException e) {
-                System.out.println("Something went wrong..");
             }
-        }
+        bw.close();
+            } catch (IOException e) {
+            System.out.println("Something went wrong..");
+        } 
     }
 }

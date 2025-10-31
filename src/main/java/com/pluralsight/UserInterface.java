@@ -42,9 +42,9 @@ public class UserInterface {
                 9) Remove a Vehicle
                  \
                 10) Sell a Vehicle
-                \
+                 \
                 11) Lease a Vehicle
-                \
+                 \
                 99) Exit\s
                  \
                 ==========================
@@ -119,8 +119,6 @@ public class UserInterface {
             }
         } while (true);
     }
-
-
 
     private void init() {
         DealershipFileManager dealershipFileManager = new DealershipFileManager();
@@ -246,9 +244,6 @@ public class UserInterface {
         String contractDate = ConsoleHelper.promptForString("Enter the date");
         String customerName = ConsoleHelper.promptForString("Enter customer's name");
         String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
-        String financeOption = ConsoleHelper.promptForString("Would you like to finance your vehicle? (Y/N)");
-
-        boolean financeOutput = financeOption.equalsIgnoreCase("Y") ? true : false;
 
 
         LeaseContract leaseContract = new LeaseContract(contractDate, customerName, customerEmail, vehicleToSell);
@@ -278,25 +273,16 @@ public class UserInterface {
         String contractDate = ConsoleHelper.promptForString("Enter the date");
         String customerName = ConsoleHelper.promptForString("Enter customer's name");
         String customerEmail = ConsoleHelper.promptForString("Enter customer's email");
-        boolean isFinanced = true;
+        String financeOption = ConsoleHelper.promptForString("Would you like to finance your vehicle? (Y/N)");
 
-        SalesContract salesContract = new SalesContract(contractDate, customerName, customerEmail, vehicleToSell, isFinanced);
+        boolean financeOutput = financeOption.equalsIgnoreCase("Y") ? true : false;
+
+        SalesContract salesContract = new SalesContract(contractDate, customerName, customerEmail, vehicleToSell, financeOutput);
         ContractDataManager cm = new ContractDataManager();
         cm.saveContract(salesContract);
 
         dealership.removeVehicle(vehicleToSell);
-        //contract.getMonthlyPay();
-//        // Remove if found
-//        if (vehicleToSell != null) {
-//            dealership.sellVehicle(vehicleToSell);
-//            System.out.println("Vehicle removed successfully!");
-//
-//            // Save the updated dealership
-//            DealershipFileManager fm = new DealershipFileManager();
-//            fm.saveDealership(dealership);
-//        } else {
-//            System.out.println("Vehicle with VIN " + vinToSell + " not found.");
-//        }
+
     }
 
     private void displayVehicles(List<Vehicle> vehicles) {
