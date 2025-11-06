@@ -12,6 +12,9 @@ public class ContractDataManager {
 
                 //Create a FileWriter and BufferedWriter:
 
+//            if (sale.isFinance() == true){
+//                sale.isFinance() = "Yes";
+//            }
 
             String saleData = "Sale" + "|" +
                         sale.getDate() + "|" +
@@ -25,12 +28,10 @@ public class ContractDataManager {
                         sale.getVehicleSold().getColor() + "|" +
                         sale.getVehicleSold().getOdometer() + "|" +
                         sale.getVehicleSold().getPrice() + "|" +
-                        sale.getVehicleSold().getVin() + "|" +
                         sale.getSalesTax() + "|" +
                         sale.getRecordingFee() + "|" +
                         sale.getProcessFee() + "|" +
                         sale.getTotalPrice() + "|" +
-                        sale.isFinance() + "|" +
                         sale.isFinance() + "|" +
                         sale.getMonthlyPay();
 
@@ -55,7 +56,6 @@ public class ContractDataManager {
                         lease.getVehicleSold().getColor() + "|" +
                         lease.getVehicleSold().getOdometer() + "|" +
                         lease.getVehicleSold().getPrice() + "|" +
-                        lease.getVehicleSold().getVin() + "|" +
                         lease.getEndValue() + "|" +
                         lease.getLeaseFee() + "|" +
                         lease.getTotalPrice() + "|" +

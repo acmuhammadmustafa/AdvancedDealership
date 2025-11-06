@@ -250,7 +250,9 @@ public class UserInterface {
         ContractDataManager cm = new ContractDataManager();
         cm.saveContract(leaseContract);
 
-        dealership.removeVehicle(vehicleToSell); // Edit this (?)
+        dealership.removeVehicle(vehicleToSell);
+        DealershipFileManager file = new DealershipFileManager();
+        file.saveDealership(dealership);
     }
 
     private void processSellAVehicle() {
@@ -282,6 +284,9 @@ public class UserInterface {
         cm.saveContract(salesContract);
 
         dealership.removeVehicle(vehicleToSell);
+
+        DealershipFileManager file = new DealershipFileManager();
+        file.saveDealership(dealership);
 
     }
 
